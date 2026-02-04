@@ -8,6 +8,10 @@ public class PortalGun : MonoBehaviour
 
     float fireRate, timeStamp;
 
+    [SerializeField] GameObject bluePortalPrefab, orangePortalPrefab;
+
+    GameObject bluePortalInstance, orangePortalInstance;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,6 +28,17 @@ public class PortalGun : MonoBehaviour
 
         Physics.IgnoreCollision(gameObject.GetComponentInChildren<Collider>(), blueProjectileInstance.GetComponentInChildren<Collider>());
         Physics.IgnoreCollision(gameObject.GetComponentInChildren<Collider>(), orangeProjectileInstance.GetComponentInChildren<Collider>());
+
+        bluePortalInstance = Instantiate(bluePortalPrefab);
+        bluePortalInstance.SetActive(false);
+        blueProjectileInstance.GetComponent<PortalProjectile>().SetPortal(bluePortalInstance);
+
+        orangePortalInstance = Instantiate(orangePortalPrefab);
+        orangePortalInstance.SetActive(false);
+        orangeProjectileInstance.GetComponent<PortalProjectile>().SetPortal(orangePortalInstance);
+
+        bluePortalInstance.GetComponent<Portal>().SetOtherPortal(orangePortalInstance);
+        orangePortalInstance.GetComponent<Portal>().SetOtherPortal(bluePortalInstance);
     }
 
     // Update is called once per frame

@@ -34,13 +34,13 @@ public class PlayerController : MonoBehaviour
 
         angles = weaponPivot.transform.eulerAngles;
 
-        if (angles.x > 45.0f && angles.x < 180.0f)
+        if (angles.x > 60.0f && angles.x < 180.0f)
         {
-            weaponPivot.transform.localEulerAngles = new Vector3(45.0f, 0, 0);
+            weaponPivot.transform.localEulerAngles = new Vector3(60.0f, 0, 0);
         }
-        if (angles.x < 315.0f && angles.x > 180.0f)
+        if (angles.x < 300.0f && angles.x > 180.0f)
         {
-            weaponPivot.transform.localEulerAngles = new Vector3(315.0f, 0, 0);
+            weaponPivot.transform.localEulerAngles = new Vector3(300.0f, 0, 0);
         }
 
         if (fireValue == -1)

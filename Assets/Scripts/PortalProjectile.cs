@@ -2,21 +2,11 @@ using UnityEngine;
 
 public class PortalProjectile : MonoBehaviour
 {
-    [SerializeField] GameObject portalPrefab;
-
     GameObject portalInstance;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void SetPortal(GameObject portal)
     {
-        portalInstance = Instantiate(portalPrefab);
-        portalInstance.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        portalInstance = portal;
     }
 
     private void OnCollisionEnter(Collision collision)
