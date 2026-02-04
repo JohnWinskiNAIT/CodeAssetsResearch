@@ -61,6 +61,11 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        transform.eulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+    }
+
     private void OnEnable()
     {
         moveAction.Enable();
