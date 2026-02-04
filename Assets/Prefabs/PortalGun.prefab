@@ -160,8 +160,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6d563bec811e0f479d09dca6e64e29c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PortalGun
-  blueProjectile: {fileID: 6098780101463582030, guid: cd06fee5f7089ba43b20159ed2ebee8f, type: 3}
-  orangeProjectile: {fileID: 6098780101463582030, guid: 08ab3f75610ff7f4292a8a538221ccfb, type: 3}
+  blueProjectilePrefab: {fileID: 6098780101463582030, guid: cd06fee5f7089ba43b20159ed2ebee8f, type: 3}
+  blueProjectileInstance: {fileID: 0}
+  orangeProjectilePrefab: {fileID: 6098780101463582030, guid: 08ab3f75610ff7f4292a8a538221ccfb, type: 3}
+  orangeProjectileInstance: {fileID: 0}
   barrelEnd: {fileID: 7094993400555287582}
 --- !u!1 &7094993400555287582
 GameObject:

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PortalGun : MonoBehaviour
 {
-    [SerializeField] GameObject blueProjectile, blueProjectileInstance, orangeProjectile, orangeProjectileInstance, barrelEnd;
+    [SerializeField] GameObject blueProjectilePrefab, blueProjectileInstance, orangeProjectilePrefab, orangeProjectileInstance, barrelEnd;
 
     Rigidbody blueRbody, orangeRbody;
 
@@ -14,13 +14,16 @@ public class PortalGun : MonoBehaviour
         fireRate = 1;
         timeStamp = -1;
 
-        blueProjectileInstance = Instantiate(blueProjectile);
+        blueProjectileInstance = Instantiate(blueProjectilePrefab);
         blueRbody = blueProjectileInstance.GetComponent<Rigidbody>();
         blueProjectileInstance.SetActive(false);
 
-        orangeProjectileInstance = Instantiate(orangeProjectile);
+        orangeProjectileInstance = Instantiate(orangeProjectilePrefab);
         orangeRbody = orangeProjectileInstance.GetComponent<Rigidbody>();
         orangeProjectileInstance.SetActive(false);
+
+        Physics.IgnoreCollision(gameObject.GetComponentInChildren<Collider>(), blueProjectileInstance.GetComponentInChildren<Collider>());
+        Physics.IgnoreCollision(gameObject.GetComponentInChildren<Collider>(), orangeProjectileInstance.GetComponentInChildren<Collider>());
     }
 
     // Update is called once per frame
