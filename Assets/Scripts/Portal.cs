@@ -23,12 +23,22 @@ public class Portal : MonoBehaviour
         trigger = GetComponent<Collider>();
     }
     
-    public void Teleport(GameObject obj, Vector3 velocity, Vector3 rot)
+    public void Teleport(GameObject obj, Vector3 velocity, Quaternion relativeRotation, Vector3 rot)
     {
-        obj.transform.position = teleportPoint.transform.position + Vector3.down;
-        //obj.transform.rotation = teleportPoint.transform.rotation;
-        obj.transform.eulerAngles = rot - transform.eulerAngles;
-        obj.transform.Rotate(new Vector3(0, 180, 0));
+        obj.transform.position = teleportPoint.transform.position - obj.transform.up;
+        //obj.transform.eulerAngles = transform.eulerAngles + rot;
+
+        obj.transform.rotation = transform.rotation * relativeRotation;
+
+        if (obj.transform.rotation.eulerAngles.z == 180.0f)
+        {
+            obj.transform.Rotate(new Vector3(0, 0, 180));
+            //obj.transform.rotation = Quaternion.Euler(obj.transform.rotation.x, obj.transform.rotation.y, 0);
+        }
+        else
+        {
+            obj.transform.Rotate(new Vector3(0, 180, 0));
+        }
         timeStamp = Time.time;
         trigger.enabled = false;
 
@@ -37,9 +47,20 @@ public class Portal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Vector3 rot = transform.eulerAngles - other.transform.eulerAngles;
+        if (otherPortal.activeSelf == true)
+        {
+            Rigidbody rbody = other.gameObject.GetComponent<Rigidbody>();
 
-        Vector3 velocity = other.gameObject.GetComponent<Rigidbody>().linearVelocity;
-        otherPortal.GetComponent<Portal>().Teleport(other.gameObject, velocity, rot);        
+            if (rbody != null)
+            {
+                Quaternion relativeRotation;
+                relativeRotation = Quaternion.Inverse(transform.rotation) * other.transform.rotation;
+                Vector3 rot = transform.eulerAngles - other.transform.eulerAngles;
+
+                Vector3 velocity = other.gameObject.GetComponent<Rigidbody>().linearVelocity;
+                otherPortal.GetComponent<Portal>().Teleport(other.gameObject, velocity, relativeRotation, rot);
+            }
+        }
+                
     }
 }

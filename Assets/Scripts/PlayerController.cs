@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(Vector3.up, rotateValue.x * rotationSpeed * Time.fixedDeltaTime);
         weaponPivot.transform.Rotate(Vector3.right, -rotateValue.y * rotationSpeed * Time.fixedDeltaTime);
 
-        angles = weaponPivot.transform.eulerAngles;
+        angles = weaponPivot.transform.localEulerAngles;
 
         if (angles.x > 60.0f && angles.x < 180.0f)
         {
@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour
 
         if (fireValue == -1)
         {
-            Debug.Log("P fire");
             BroadcastMessage("PrimaryFire");
         }
 
