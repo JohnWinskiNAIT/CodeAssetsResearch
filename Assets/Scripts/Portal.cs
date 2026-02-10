@@ -6,9 +6,16 @@ public class Portal : MonoBehaviour
 
     [SerializeField] GameObject teleportPoint;
 
+    [SerializeField] GameObject camera, player;
+
     Collider trigger;
 
     float timeStamp;
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
 
     private void Update()
     {
@@ -16,6 +23,13 @@ public class Portal : MonoBehaviour
         {
             trigger.enabled = true;
         }
+
+        Vector3 lookVector = (player.transform.position + Vector3.up * 1.5f) - otherPortal.transform.position;
+
+        //Quaternion rotation = Quaternion.AngleAxis(otherPortal.transform.eulerAngles.y - transform.eulerAngles.y, Vector3.up);
+        camera.transform.LookAt(transform.position + new Vector3(lookVector.x, -lookVector.y, lookVector.z));
+
+        camera.transform.Rotate(Vector3.up, transform.eulerAngles.y - otherPortal.transform.eulerAngles.y, Space.World);
     }
     public void SetOtherPortal(GameObject portal)
     {

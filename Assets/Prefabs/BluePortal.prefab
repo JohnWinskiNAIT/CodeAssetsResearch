@@ -57,7 +57,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 3, y: 3, z: 0.1}
-  m_Center: {x: 0, y: 0, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0.1}
 --- !u!114 &7597857508670614694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,6 +72,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Portal
   otherPortal: {fileID: 0}
   teleportPoint: {fileID: 4310796013653558427}
+  camera: {fileID: 3332346144175636293}
+  player: {fileID: 0}
 --- !u!1 &3332346144175636293
 GameObject:
   m_ObjectHideFlags: 0
