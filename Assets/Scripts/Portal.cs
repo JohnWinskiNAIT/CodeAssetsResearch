@@ -1,3 +1,4 @@
+using Unity.Hierarchy;
 using UnityEngine;
 
 public class Portal : MonoBehaviour
@@ -12,19 +13,21 @@ public class Portal : MonoBehaviour
 
     float timeStamp;
 
+    bool triggerActive = true;
+
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");//.GetComponentInChildren<Camera>().gameObject;
     }
 
     private void Update()
     {
         if (trigger.enabled == false && Time.time > timeStamp + 0.5f)
         {
-            trigger.enabled = true;
+            //trigger.enabled = true;
         }
 
-        Vector3 lookVector = (player.transform.position + Vector3.up * 1.5f) - otherPortal.transform.position;
+        Vector3 lookVector = (player.transform.position + Vector3.up * 1.3f) - otherPortal.transform.position;
 
         //Quaternion rotation = Quaternion.AngleAxis(otherPortal.transform.eulerAngles.y - transform.eulerAngles.y, Vector3.up);
         camera.transform.LookAt(transform.position + new Vector3(lookVector.x, -lookVector.y, lookVector.z));
@@ -36,7 +39,7 @@ public class Portal : MonoBehaviour
         otherPortal = portal;
         trigger = GetComponent<Collider>();
     }
-    
+
     public void Teleport(GameObject obj, Vector3 velocity, Quaternion relativeRotation, Vector3 rot)
     {
         obj.transform.position = teleportPoint.transform.position - obj.transform.up;
@@ -54,27 +57,35 @@ public class Portal : MonoBehaviour
             obj.transform.Rotate(new Vector3(0, 180, 0));
         }
         timeStamp = Time.time;
-        trigger.enabled = false;
+        triggerActive = false;
 
         obj.GetComponent<Rigidbody>().linearVelocity = velocity;
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (otherPortal.activeSelf == true)
+        if (triggerActive)
         {
-            Rigidbody rbody = other.gameObject.GetComponent<Rigidbody>();
-
-            if (rbody != null)
+            if (otherPortal.activeSelf == true)
             {
-                Quaternion relativeRotation;
-                relativeRotation = Quaternion.Inverse(transform.rotation) * other.transform.rotation;
-                Vector3 rot = transform.eulerAngles - other.transform.eulerAngles;
+                Rigidbody rbody = other.gameObject.GetComponent<Rigidbody>();
 
-                Vector3 velocity = other.gameObject.GetComponent<Rigidbody>().linearVelocity;
-                otherPortal.GetComponent<Portal>().Teleport(other.gameObject, velocity, relativeRotation, rot);
+                if (rbody != null)
+                {
+                    Quaternion relativeRotation;
+                    relativeRotation = Quaternion.Inverse(transform.rotation) * other.transform.rotation;
+                    Vector3 rot = transform.eulerAngles - other.transform.eulerAngles;
+
+                    Vector3 velocity = other.gameObject.GetComponent<Rigidbody>().linearVelocity;
+                    otherPortal.GetComponent<Portal>().Teleport(other.gameObject, velocity, relativeRotation, rot);
+                }
             }
         }
-                
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        triggerActive = true;
     }
 }

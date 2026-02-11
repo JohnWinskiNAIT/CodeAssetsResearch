@@ -29,8 +29,8 @@ public class PlayerController : MonoBehaviour
         rotateValue = rotateAction.ReadValue<Vector2>();
         fireValue = fireAction.ReadValue<float>();
 
-        transform.Rotate(Vector3.up, rotateValue.x * rotationSpeed * Time.fixedDeltaTime);
-        weaponPivot.transform.Rotate(Vector3.right, -rotateValue.y * rotationSpeed * Time.fixedDeltaTime);
+        transform.Rotate(Vector3.up, rotateValue.x * rotationSpeed * Time.deltaTime);
+        weaponPivot.transform.Rotate(Vector3.right, -rotateValue.y * rotationSpeed * Time.deltaTime);
 
         angles = weaponPivot.transform.localEulerAngles;
 
